@@ -1,11 +1,11 @@
-import js from '@eslint/js'
+import ts from '@eslint/ts'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config({
-	extends: [js.configs.recommended, ...tseslint.configs.recommended],
+	extends: [ts.configs.recommended, ...tseslint.configs.recommended],
 	files: ['**/*.{ts,tsx}'],
 	ignores: ['dist'],
 	languageOptions: {
@@ -19,7 +19,7 @@ export default tseslint.config({
 	rules: {
 		...reactHooks.configs.recommended.rules,
 		'no-empty-pattern': 'warn',
-		'no-unused-vars': 'warn',
+		'no-unused-vars': 'off',
 		'@typescript-eslint/no-empty-object-type': 'warn',
 		'react-refresh/only-export-components': [
 			'warn',

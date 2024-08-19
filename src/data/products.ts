@@ -7,7 +7,7 @@ import ficusMicrocarpaGinseng from '../assets/images/ficus-microcarpa-ginseng.jp
 import howeaForsteriana from '../assets/images/howea-forsteriana.jpg'
 import aglaonemaMaria from '../assets/images/aglaonema-maria.webp'
 
-export const pizzaData = {
+export const productsData = {
 	status: 'success',
 	data: [
 		{
