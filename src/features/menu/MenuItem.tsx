@@ -6,7 +6,7 @@ type MenuItemProps = {
 }
 
 function MenuItem({ product }: MenuItemProps) {
-	const { id, name, unitPrice, description, soldOut, image } = product
+	const { name, unitPrice, description, soldOut, image } = product
 
 	return (
 		<li>

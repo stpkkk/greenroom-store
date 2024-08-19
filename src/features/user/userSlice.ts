@@ -1,8 +1,8 @@
-function getPosition() {
-	return new Promise(function (resolve, reject) {
-		navigator.geolocation.getCurrentPosition(resolve, reject)
-	})
-}
+// function getPosition() {
+// 	return new Promise(function (resolve, reject) {
+// 		navigator.geolocation.getCurrentPosition(resolve, reject)
+// 	})
+// }
 
 // async function fetchAddress() {
 //   // 1) We get the user's geolocation position
