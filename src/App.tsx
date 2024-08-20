@@ -5,6 +5,23 @@ import Cart from './features/cart/Cart'
 import Order from './features/order/Order'
 import CreateOrder from './features/order/CreateOrder'
 import AppLayout from './ui/AppLayout'
+import { productsData } from './data/products'
+import { Server } from 'miragejs'
+
+//import.meta.env.VITE_API_URL - same as process.env.REACT_APP_API_URL;
+
+new Server({
+	routes() {
+		this.urlPrefix = import.meta.env.VITE_API_URL
+		this.namespace = 'api'
+
+		this.get('/products', () => {
+			return {
+				products: productsData.data,
+			}
+		})
+	},
+})
 
 const router = createBrowserRouter([
 	{

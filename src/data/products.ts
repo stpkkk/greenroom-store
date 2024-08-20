@@ -1,7 +1,6 @@
 import sansevieriaMoonshine from '../assets/images/sansevieria-moonshine.jpg'
 import sansevieriaCylindrica from '../assets/images/sansevieria-cylindrica.webp'
 import spathiphyllumSweetChico from '../assets/images/spathiphyllum-sweet-chico.jpg'
-import zamioculcas from '../assets/images/zamioculcas.webp'
 import calatheaOrbifolia from '../assets/images/calathea-orbifolia.jpg'
 import ficusMicrocarpaGinseng from '../assets/images/ficus-microcarpa-ginseng.jpg'
 import howeaForsteriana from '../assets/images/howea-forsteriana.jpg'
@@ -39,15 +38,6 @@ export const productsData = {
 		},
 		{
 			id: 4,
-			name: 'Замиокулькас',
-			unitPrice: 11290,
-			image: zamioculcas,
-			description:
-				'Замиокулькас 21 характеризуется глянцевыми мясистыми листьями на вертикальных побегах и крупными клубнями под ними. Клубни хранят в себе большое количество воды, что делает его засухоустойчивым растением, которое может достаточно долго обходиться без воды. Растет очень медленно, за год появляется всего несколько новых листов и прирост составляет около 10 – 15 см в год. Но при хорошем уходе в течение своей жизни может достичь метровой высоты и даже выше. Замиокулькас умеет приспосабливаться к самым неблагоприятным условиям обитания, но не любит перелив. ',
-			soldOut: false,
-		},
-		{
-			id: 5,
 			name: 'Калатея Орбифолия',
 			unitPrice: 6790,
 			image: calatheaOrbifolia,
@@ -56,7 +46,7 @@ export const productsData = {
 			soldOut: false,
 		},
 		{
-			id: 6,
+			id: 5,
 			name: 'Фикус Микрокарпа Гинсенг',
 			unitPrice: 4590,
 			image: ficusMicrocarpaGinseng,
@@ -65,7 +55,7 @@ export const productsData = {
 			soldOut: false,
 		},
 		{
-			id: 7,
+			id: 6,
 			name: 'Ховея Форстериана',
 			unitPrice: 8790,
 			image: howeaForsteriana,
@@ -74,7 +64,7 @@ export const productsData = {
 			soldOut: false,
 		},
 		{
-			id: 8,
+			id: 7,
 			name: 'Аглаонема Мария',
 			unitPrice: 3990,
 			image: aglaonemaMaria,
