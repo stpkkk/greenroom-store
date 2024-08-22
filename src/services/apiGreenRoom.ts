@@ -7,3 +7,12 @@ export async function getProducts(): Promise<Product[]> {
 	const data = await res.json()
 	return data.products
 }
+
+export async function getOrder(id: string) {
+	const res = await fetch(`/api/order/${id}`)
+	if (!res.ok) throw Error(`Couldn't find order #${id}`)
+
+	const data = await res.json()
+
+	return data
+}
