@@ -2,7 +2,7 @@ import { RouterProvider } from 'react-router-dom'
 import { productsData } from './data/products'
 import { Server } from 'miragejs'
 import { ordersData } from './data/orders'
-import { router } from './Router'
+import { router } from './router'
 
 new Server({
 	routes() {
@@ -15,7 +15,7 @@ new Server({
 				products: productsData.data,
 			}
 		})
-		this.get('/order/:orderId', (schema, request) => {
+		this.get('/order/:orderId', (_schema, request) => {
 			const { orderId } = request.params
 			const order = ordersData.find(order => order.id === orderId)
 

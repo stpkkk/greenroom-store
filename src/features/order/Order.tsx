@@ -1,5 +1,3 @@
-// Test ID: IIDSAT
-
 import { Params, useLoaderData } from 'react-router-dom'
 import { getOrder } from '../../services/apiGreenRoom'
 import { OrderType } from '../../types/order'
@@ -19,14 +17,14 @@ function Order() {
 	const { order } = useLoaderData() as OrderData
 
 	const {
-		id,
-		customer,
-		phone,
-		address,
+		// id,
+		// customer,
+		// phone,
+		// address,
 		priority,
 		estimatedDelivery,
-		cart,
-		position,
+		// cart,
+		// position,
 		orderPrice,
 		priorityPrice,
 	} = order
@@ -50,7 +48,7 @@ function Order() {
 						? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
 						: 'Order should have arrived'}
 				</p>
-				{/* <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p> */}
+				<p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
 			</div>
 
 			<div>

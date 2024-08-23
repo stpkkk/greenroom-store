@@ -12,7 +12,7 @@ export type OrderType = {
 	phone: string
 	address: string
 	priority: boolean
-	estimatedDelivery: Date
+	estimatedDelivery: string
 	cart: OrderProduct[]
 	position: string
 	orderPrice: number

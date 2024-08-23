@@ -1,8 +1,8 @@
-import { Order } from '../../types/order'
+// import { Order } from '../../types/order'
 import { formatCurrency } from '../../utils/helpers'
 
 // function OrderItem({ item, isLoadingDescription, description }: Order)
-function OrderItem({ item }: Order) {
+function OrderItem({ item }: any) {
 	const { quantity, name, totalPrice } = item
 
 	return (
