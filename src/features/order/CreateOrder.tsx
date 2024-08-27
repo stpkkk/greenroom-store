@@ -1,23 +1,9 @@
-import { useState } from 'react'
-import { Form, redirect } from 'react-router-dom'
-import { OrderType } from '../../types/order'
+import React, { useState } from 'react'
+import { Form, useNavigate } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
+import { OrderProduct, OrderType } from '../../types/order'
 
-// https://uibakery.io/regex-library/phone-number
-// const isValidPhone = (str: string) =>
-// 	/^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-// 		str
-// 	)
-
-type FormDataOrder = {
-	customer: string
-	phone: string
-	address: string
-	priority: string
-	cart: string
-}
-
-const fakeCart = [
+const fakeCart: OrderProduct[] = [
 	{
 		pizzaId: 12,
 		name: 'Mediterranean',
@@ -41,15 +27,51 @@ const fakeCart = [
 	},
 ]
 
-function CreateOrder() {
-	const [withPriority, setWithPriority] = useState(false)
+const CreateOrder: React.FC = () => {
+	const [withPriority, setWithPriority] = useState<boolean>(false)
+	const navigate = useNavigate()
 	const cart = fakeCart
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+
+		const formData = new FormData(event.currentTarget)
+		const data = Object.fromEntries(formData.entries()) as {
+			customer: string
+			phone: string
+			address: string
+			priority: string
+		}
+
+		const order: OrderType = {
+			id: '',
+			customer: data.customer,
+			phone: data.phone,
+			address: data.address,
+			estimatedDelivery: '',
+			position: '',
+			orderPrice: 666,
+			priorityPrice: 666,
+			priority: data.priority === 'on',
+			cart,
+		}
+
+		try {
+			const newOrder = await createOrder(order)
+
+			if (!newOrder.id) throw new Error('Invalid order ID')
+
+			navigate(`/order/${newOrder.id}`)
+		} catch (error) {
+			console.error('Error creating order:', error)
+			navigate('/error')
+		}
+	}
 
 	return (
 		<div>
 			<h2>Ready to order? Let's go!</h2>
-
-			<Form method='POST'>
+			<Form method='post' onSubmit={handleSubmit}>
 				<div>
 					<label>First Name</label>
 					<input type='text' name='customer' required />
@@ -76,7 +98,7 @@ function CreateOrder() {
 						id='priority'
 						onChange={e => setWithPriority(e.target.checked)}
 					/>
-					<label htmlFor='priority'>Want to yo give your order priority?</label>
+					<label htmlFor='priority'>Want to give your order priority?</label>
 				</div>
 
 				<div>
@@ -86,28 +108,6 @@ function CreateOrder() {
 			</Form>
 		</div>
 	)
-}
-
-export async function action({ request }: { request: Request }) {
-	const formData = await request.formData()
-	const data = Object.fromEntries(formData) as FormDataOrder
-
-	const order: OrderType = {
-		id: '',
-		customer: data.customer,
-		phone: data.phone,
-		address: data.address,
-		estimatedDelivery: '',
-		position: '',
-		orderPrice: 0,
-		priorityPrice: 0,
-		priority: data.priority === 'on',
-		cart: JSON.parse(data.cart),
-	}
-
-	const newOrder = await createOrder(order)
-
-	return redirect(`/order/${newOrder.id}`)
 }
 
 export default CreateOrder

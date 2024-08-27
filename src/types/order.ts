@@ -1,4 +1,4 @@
-type OrderProduct = {
+export type OrderProduct = {
 	pizzaId: number
 	name: string
 	quantity: number
@@ -11,10 +11,10 @@ export type OrderType = {
 	customer: string
 	phone: string
 	address: string
-	priority: boolean
 	estimatedDelivery: string
-	cart: OrderProduct[]
 	position: string
 	orderPrice: number
 	priorityPrice: number
+	priority: boolean
+	cart: OrderProduct[]
 }

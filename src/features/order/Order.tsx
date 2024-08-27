@@ -17,9 +17,9 @@ function Order() {
 	const { order } = useLoaderData() as OrderData
 
 	const {
-		// id,
-		// customer,
-		// phone,
+		id,
+		customer,
+		phone,
 		// address,
 		priority,
 		estimatedDelivery,
@@ -34,7 +34,9 @@ function Order() {
 	return (
 		<div>
 			<div>
-				<h2>Status</h2>
+				<h2>Status {id}</h2>
+				<h3>customer:{customer}</h3>
+				<h3>phone:{phone}</h3>
 
 				<div>
 					{priority && <span>Priority</span>}

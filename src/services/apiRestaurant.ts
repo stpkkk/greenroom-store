@@ -30,6 +30,9 @@ export async function createOrder(newOrder: OrderType) {
 			},
 		})
 
+		console.log('res:', res)
+
+
 		if (!res.ok) throw Error()
 		const { data } = await res.json()
 		return data
@@ -38,19 +41,20 @@ export async function createOrder(newOrder: OrderType) {
 	}
 }
 
-export async function updateOrder(id: number, updateObj: OrderType) {
-	try {
-		const res = await fetch(`${API_URL}/order/${id}`, {
-			method: 'PATCH',
-			body: JSON.stringify(updateObj),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
+// export async function updateOrder(id: number, updateObj: OrderType) {
+// 	try {
+// 		const res = await fetch(`${API_URL}/order/${id}`, {
+// 			method: 'PATCH',
+// 			body: JSON.stringify(updateObj),
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 			},
+// 		})
 
-		if (!res.ok) throw Error()
-		// We don't need the data, so we don't return anything
-	} catch (err) {
-		throw Error('Failed updating your order')
-	}
+
+// 		if (!res.ok) throw Error()
+// 		// We don't need the data, so we don't return anything
+// 	} catch (err) {
+// 		throw Error('Failed updating your order')
+// 	}
 }
