@@ -1,7 +1,22 @@
 import React, { useState } from 'react'
-import { Form, useNavigate } from 'react-router-dom'
+import { Form, useNavigate, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
 import { OrderProduct, OrderType } from '../../types/order'
+
+// https://uibakery.io/regex-library/phone-number
+const isValidPhone = (str: string) =>
+	/^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str)
+
+type FormDataType = {
+	customer: string
+	phone: string
+	address: string
+	priority: string
+}
+
+type FormErrorsType = {
+	phone?: string
+}
 
 const fakeCart: OrderProduct[] = [
 	{
@@ -29,18 +44,32 @@ const fakeCart: OrderProduct[] = [
 
 const CreateOrder: React.FC = () => {
 	const [withPriority, setWithPriority] = useState<boolean>(false)
+	const [formErrors, setFormErrors] = useState<FormErrorsType>({})
 	const navigate = useNavigate()
+	const navigation = useNavigation()
+	const isSubmitting = navigation.state === 'submitting'
 	const cart = fakeCart
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
 		const formData = new FormData(event.currentTarget)
-		const data = Object.fromEntries(formData.entries()) as {
-			customer: string
-			phone: string
-			address: string
-			priority: string
+		const data = Object.fromEntries(formData.entries()) as FormDataType
+
+		// Clear previous errors
+		setFormErrors({})
+
+		const errors: FormErrorsType = {}
+
+		// Validate phone number
+		if (!isValidPhone(data.phone)) {
+			errors.phone = 'Please provide a valid phone number.'
+		}
+
+		// If there are any errors, update state and exit early
+		if (Object.keys(errors).length > 0) {
+			setFormErrors(errors)
+			return
 		}
 
 		const order: OrderType = {
@@ -59,12 +88,9 @@ const CreateOrder: React.FC = () => {
 		try {
 			const newOrder = await createOrder(order)
 
-			if (!newOrder.id) throw new Error('Invalid order ID')
-
 			navigate(`/order/${newOrder.id}`)
 		} catch (error) {
 			console.error('Error creating order:', error)
-			navigate('/error')
 		}
 	}
 
@@ -81,6 +107,9 @@ const CreateOrder: React.FC = () => {
 					<label>Phone number</label>
 					<div>
 						<input type='tel' name='phone' required />
+						{formErrors.phone && (
+							<p style={{ color: 'red' }}>{formErrors.phone}</p>
+						)}
 					</div>
 				</div>
 
@@ -103,7 +132,9 @@ const CreateOrder: React.FC = () => {
 
 				<div>
 					<input type='hidden' name='cart' value={JSON.stringify(cart)} />
-					<button type='submit'>Order now</button>
+					<button type='submit' disabled={isSubmitting}>
+						{isSubmitting ? 'Placing order...' : 'Order now'}
+					</button>
 				</div>
 			</Form>
 		</div>
