@@ -7,12 +7,12 @@ function AppLayout() {
 	const navigation = useNavigation()
 
 	return (
-		<div className='layout'>
-			<Header />
-			<main>{navigation.state === 'loading' ? <Loader /> : <Outlet />}</main>
-			<CartOverview />
-		</div>
-	)
+    <div className="layout text-neutral-300">
+      <Header />
+      <main>{navigation.state === 'loading' ? <Loader /> : <Outlet />}</main>
+      <CartOverview />
+    </div>
+  );
 }
 
 export default AppLayout

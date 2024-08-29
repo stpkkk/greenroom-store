@@ -3,9 +3,9 @@ import SearchOrder from '../features/order/SearchOrder'
 
 export default function Header() {
 	return (
-		<header>
-			<Link to='/'>GreenRoom</Link>
-			<SearchOrder />
-		</header>
-	)
+    <header className="bg-neutral-900">
+      <Link to="/">GreenRoom</Link>
+      <SearchOrder />
+    </header>
+  );
 }
