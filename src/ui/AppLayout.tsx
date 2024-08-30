@@ -7,7 +7,7 @@ function AppLayout() {
 	const navigation = useNavigation()
 
 	return (
-    <div className="layout text-neutral-300">
+    <div className="layout bg-neutral-950 text-neutral-300">
       <Header />
       <main>{navigation.state === 'loading' ? <Loader /> : <Outlet />}</main>
       <CartOverview />
