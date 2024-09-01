@@ -4,7 +4,7 @@ import Username from './Username';
 
 export default function Header() {
   return (
-    <header className="border-b border-neutral-500 bg-neutral-900 px-4 py-3 uppercase sm:px-6">
+    <header className="flex items-center justify-between border-b border-neutral-500 bg-neutral-900 px-4 py-3 uppercase sm:px-6">
       <Link to="/" className="tracking-widest">
         GreenRoom
       </Link>

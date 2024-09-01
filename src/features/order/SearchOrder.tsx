@@ -14,14 +14,15 @@ function SearchOrder() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<input
-				type='text'
-				placeholder='Search order #'
-				value={query}
-				onChange={e => setQuery(e.target.value)}
-			/>
-		</form>
-	)
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Search order #"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="max-w-50 w-full"
+      />
+    </form>
+  );
 }
 export default SearchOrder
