@@ -95,50 +95,61 @@ const CreateOrder: React.FC = () => {
 	}
 
 	return (
-		<div>
-			<h2>Ready to order? Let's go!</h2>
-			<Form method='post' onSubmit={handleSubmit}>
-				<div>
-					<label>First Name</label>
-					<input type='text' name='customer' required />
-				</div>
+    <div className="p-2">
+      <h2>Готовы оформить заказ?</h2>
+      <Form method="post" onSubmit={handleSubmit}>
+        <div>
+          <label>Ваше Имя:</label>
+          <input className="input" type="text" name="customer" required />
+        </div>
 
-				<div>
-					<label>Phone number</label>
-					<div>
-						<input type='tel' name='phone' required />
-						{formErrors.phone && (
-							<p style={{ color: 'red' }}>{formErrors.phone}</p>
-						)}
-					</div>
-				</div>
+        <div>
+          <label>Телефон:</label>
+          <div>
+            <input className="input" type="tel" name="phone" required />
+            {formErrors.phone && (
+              <p style={{ color: 'red' }}>{formErrors.phone}</p>
+            )}
+          </div>
+        </div>
 
-				<div>
-					<label>Address</label>
-					<div>
-						<input type='text' name='address' required />
-					</div>
-				</div>
+        <div>
+          <label>Адрес:</label>
+          <div>
+            <input
+              className="input"
+              type="text"
+              name="address"
+              placeholder="Куда доставить заказ?"
+              required
+            />
+          </div>
+        </div>
 
-				<div>
-					<input
-						type='checkbox'
-						name='priority'
-						id='priority'
-						onChange={e => setWithPriority(e.target.checked)}
-					/>
-					<label htmlFor='priority'>Want to give your order priority?</label>
-				</div>
+        <div>
+          <input
+            className="size-6 accent-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
+            type="checkbox"
+            name="priority"
+            id="priority"
+            onChange={(e) => setWithPriority(e.target.checked)}
+          />
+          <label htmlFor="priority">Ускорить доставку ?</label>
+        </div>
 
-				<div>
-					<input type='hidden' name='cart' value={JSON.stringify(cart)} />
-					<button type='submit' disabled={isSubmitting}>
-						{isSubmitting ? 'Placing order...' : 'Order now'}
-					</button>
-				</div>
-			</Form>
-		</div>
-	)
+        <div>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-block rounded-full bg-neutral-900 px-4 py-3 font-semibold uppercase tracking-wide transition-colors duration-300 hover:bg-neutral-800 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-opacity-50 focus:ring-offset-2 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? 'Размещаем заказ...' : 'Заказать сейчас'}
+          </button>
+        </div>
+      </Form>
+    </div>
+  );
 }
 
 export default CreateOrder
