@@ -43,58 +43,60 @@ const fakeCart: OrderProduct[] = [
 ]
 
 const CreateOrder: React.FC = () => {
-	const [withPriority, setWithPriority] = useState<boolean>(false)
-	const [formErrors, setFormErrors] = useState<FormErrorsType>({})
-	const navigate = useNavigate()
-	const navigation = useNavigation()
-	const isSubmitting = navigation.state === 'submitting'
-	const cart = fakeCart
+  // const [withPriority, setWithPriority] = useState<boolean>(false)
+  const [formErrors, setFormErrors] = useState<FormErrorsType>({});
+  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+  const cart = fakeCart;
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
+  // console.log('withPriority:', withPriority);
 
-		const formData = new FormData(event.currentTarget)
-		const data = Object.fromEntries(formData.entries()) as FormDataType
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-		// Clear previous errors
-		setFormErrors({})
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries()) as FormDataType;
 
-		const errors: FormErrorsType = {}
+    // Clear previous errors
+    setFormErrors({});
 
-		// Validate phone number
-		if (!isValidPhone(data.phone)) {
-			errors.phone = 'Please provide a valid phone number.'
-		}
+    const errors: FormErrorsType = {};
 
-		// If there are any errors, update state and exit early
-		if (Object.keys(errors).length > 0) {
-			setFormErrors(errors)
-			return
-		}
+    // Validate phone number
+    if (!isValidPhone(data.phone)) {
+      errors.phone = 'Please provide a valid phone number.';
+    }
 
-		const order: OrderType = {
-			id: '',
-			customer: data.customer,
-			phone: data.phone,
-			address: data.address,
-			estimatedDelivery: '',
-			position: '',
-			orderPrice: 666,
-			priorityPrice: 666,
-			priority: data.priority === 'on',
-			cart,
-		}
+    // If there are any errors, update state and exit early
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
 
-		try {
-			const newOrder = await createOrder(order)
+    const order: OrderType = {
+      id: '',
+      customer: data.customer,
+      phone: data.phone,
+      address: data.address,
+      estimatedDelivery: '',
+      position: '',
+      orderPrice: 666,
+      priorityPrice: 666,
+      priority: data.priority === 'on',
+      cart,
+    };
 
-			navigate(`/order/${newOrder.id}`)
-		} catch (error) {
-			console.error('Error creating order:', error)
-		}
-	}
+    try {
+      const newOrder = await createOrder(order);
 
-	return (
+      navigate(`/order/${newOrder.id}`);
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
+
+  return (
     <div className="p-2">
       <h2>Готовы оформить заказ?</h2>
       <Form method="post" onSubmit={handleSubmit}>
@@ -132,7 +134,7 @@ const CreateOrder: React.FC = () => {
             type="checkbox"
             name="priority"
             id="priority"
-            onChange={(e) => setWithPriority(e.target.checked)}
+            // onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label htmlFor="priority">Ускорить доставку ?</label>
         </div>
