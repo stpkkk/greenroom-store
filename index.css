@@ -3,42 +3,44 @@
 @tailwind utilities;
 
 @layer components {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.no-scrollbar {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+
 	.input {
 		@apply w-full rounded-full border border-neutral-300 px-4 py-2 text-sm text-neutral-500 transition-all duration-300 focus:outline-none focus:ring focus:ring-neutral-500 md:px-6 md:py-3
 	}
-}
-
-/* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
-.no-scrollbar::-webkit-scrollbar {
-	display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-	-ms-overflow-style: none;  /* IE and Edge */
-	scrollbar-width: none;  /* Firefox */
-}
-
-.loader {
-	width: 45px;
-	aspect-ratio: 0.75;
-	--c: no-repeat linear-gradient(#333 0 0);
-	background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
-	background-size: 20% 50%;
-	animation: loading 1s infinite linear;
-}
-
-@keyframes loading {
-	20% {
-		background-position: 0% 0%, 50% 50%, 100% 50%;
+	
+	.loader {
+		width: 45px;
+		aspect-ratio: 0.75;
+		--c: no-repeat linear-gradient(theme(colors.white) 0 0);
+		background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+		background-size: 20% 50%;
+		animation: loading 1s infinite linear;
 	}
-	40% {
-		background-position: 0% 100%, 50% 0%, 100% 50%;
-	}
-	60% {
-		background-position: 0% 50%, 50% 100%, 100% 0%;
-	}
-	80% {
-		background-position: 0% 50%, 50% 50%, 100% 100%;
+	
+	
+	@keyframes loading {
+		20% {
+			background-position: 0% 0%, 50% 50%, 100% 50%;
+		}
+		40% {
+			background-position: 0% 100%, 50% 0%, 100% 50%;
+		}
+		60% {
+			background-position: 0% 50%, 50% 100%, 100% 0%;
+		}
+		80% {
+			background-position: 0% 50%, 50% 50%, 100% 100%;
+		}
 	}
 }
+
+

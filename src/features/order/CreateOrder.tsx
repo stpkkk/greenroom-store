@@ -2,45 +2,46 @@ import React, { useState } from 'react'
 import { Form, useNavigate, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
 import { OrderProduct, OrderType } from '../../types/order'
+import Button from '../../ui/Button';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
-	/^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str)
+  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str);
 
 type FormDataType = {
-	customer: string
-	phone: string
-	address: string
-	priority: string
-}
+  customer: string;
+  phone: string;
+  address: string;
+  priority: string;
+};
 
 type FormErrorsType = {
-	phone?: string
-}
+  phone?: string;
+};
 
 const fakeCart: OrderProduct[] = [
-	{
-		pizzaId: 12,
-		name: 'Mediterranean',
-		quantity: 2,
-		unitPrice: 16,
-		totalPrice: 32,
-	},
-	{
-		pizzaId: 6,
-		name: 'Vegetale',
-		quantity: 1,
-		unitPrice: 13,
-		totalPrice: 13,
-	},
-	{
-		pizzaId: 11,
-		name: 'Spinach and Mushroom',
-		quantity: 1,
-		unitPrice: 15,
-		totalPrice: 15,
-	},
-]
+  {
+    pizzaId: 12,
+    name: 'Mediterranean',
+    quantity: 2,
+    unitPrice: 16,
+    totalPrice: 32,
+  },
+  {
+    pizzaId: 6,
+    name: 'Vegetale',
+    quantity: 1,
+    unitPrice: 13,
+    totalPrice: 13,
+  },
+  {
+    pizzaId: 11,
+    name: 'Spinach and Mushroom',
+    quantity: 1,
+    unitPrice: 15,
+    totalPrice: 15,
+  },
+];
 
 const CreateOrder: React.FC = () => {
   // const [withPriority, setWithPriority] = useState<boolean>(false)
@@ -141,17 +142,13 @@ const CreateOrder: React.FC = () => {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-block rounded-full bg-neutral-900 px-4 py-3 font-semibold uppercase tracking-wide transition-colors duration-300 hover:bg-neutral-800 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-opacity-50 focus:ring-offset-2 disabled:cursor-not-allowed"
-          >
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Размещаем заказ...' : 'Заказать сейчас'}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
   );
-}
+};
 
 export default CreateOrder

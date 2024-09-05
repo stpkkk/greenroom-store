@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import CreateUser from '../features/user/CreateUser';
 
 function Home() {
@@ -9,9 +8,7 @@ function Home() {
         <br />
         <span className="text-green-700">Добавьте зелени в вашу жизнь!</span>
       </h1>
-
       <CreateUser />
-      <Link to="/menu">Start Ordering</Link>
     </div>
   );
 }
