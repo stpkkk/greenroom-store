@@ -7,12 +7,12 @@ function Menu() {
 	const products = useLoaderData() as Product[]
 
 	return (
-		<ul>
-			{products.map(product => (
-				<MenuItem key={product.id} product={product} />
-			))}
-		</ul>
-	)
+    <ul className="divide-y divide-neutral-500 px-2">
+      {products.map((product) => (
+        <MenuItem key={product.id} product={product} />
+      ))}
+    </ul>
+  );
 }
 
 export async function loader(): Promise<Product[]> {

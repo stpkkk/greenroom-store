@@ -142,7 +142,7 @@ const CreateOrder: React.FC = () => {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button type="submit" disabled={isSubmitting}>
+          <Button style="primary" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Размещаем заказ...' : 'Заказать сейчас'}
           </Button>
         </div>
