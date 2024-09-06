@@ -21,9 +21,11 @@ function MenuItem({ product }: MenuItemProps) {
         <p className="text-sm italic opacity-90">{description}</p>
         <div className="mt-auto flex items-center justify-between">
           {!soldOut ? (
-            <p className="p-4 text-sm">{formatCurrency(unitPrice)}</p>
+            <p className="p-4 text-sm font-medium">
+              {formatCurrency(unitPrice)}
+            </p>
           ) : (
-            <p className="text-sm font-medium uppercase opacity-50">
+            <p className="p-4 text-sm font-medium uppercase opacity-50">
               Распродано
             </p>
           )}

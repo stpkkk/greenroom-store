@@ -1,44 +1,52 @@
+import { CartItemType } from '../../types/cart-item';
 import Button from '../../ui/Button';
 import LinkButton from '../../ui/LinkButton';
+import CartItem from './CartItem';
 
-// const fakeCart = [
-// 	{
-// 		pizzaId: 12,
-// 		name: 'Mediterranean',
-// 		quantity: 2,
-// 		unitPrice: 16,
-// 		totalPrice: 32,
-// 	},
-// 	{
-// 		pizzaId: 6,
-// 		name: 'Vegetale',
-// 		quantity: 1,
-// 		unitPrice: 13,
-// 		totalPrice: 13,
-// 	},
-// 	{
-// 		pizzaId: 11,
-// 		name: 'Spinach and Mushroom',
-// 		quantity: 1,
-// 		unitPrice: 15,
-// 		totalPrice: 15,
-// 	},
-// ]
+const fakeCart: CartItemType[] = [
+  {
+    id: 12,
+    name: 'Mediterranean',
+    quantity: 2,
+    unitPrice: 16,
+    totalPrice: 32,
+  },
+  {
+    id: 6,
+    name: 'Vegetale',
+    quantity: 1,
+    unitPrice: 13,
+    totalPrice: 13,
+  },
+  {
+    id: 11,
+    name: 'Spinach and Mushroom',
+    quantity: 1,
+    unitPrice: 15,
+    totalPrice: 15,
+  },
+];
 
 function Cart() {
-  // const cart = fakeCart
+  const cart = fakeCart;
 
   return (
-    <div>
-      <LinkButton to="/menu">&larr; Back to menu</LinkButton>
+    <div className="px-4 py-3">
+      <LinkButton to="/menu">&larr; Вернуться в каталог</LinkButton>
 
-      <h2>Your cart, %NAME%</h2>
+      <h2 className="mt-7 text-xl font-semibold">Корзина, %NAME%</h2>
 
-      <div>
+      <ul className="mt-3 divide-y divide-neutral-500 border-b">
+        {cart.map((item) => (
+          <CartItem item={item} key={item.id} />
+        ))}
+      </ul>
+
+      <div className="mt-6 space-x-2">
         <Button style="primary" to="/order/new">
-          Order pizzas
+          Заказать растения
         </Button>
-        <button>Clear cart</button>
+        <Button style="secondary">Очистить корзину</Button>
       </div>
     </div>
   );
