@@ -21,25 +21,25 @@ type FormErrorsType = {
 
 const fakeCart: OrderProduct[] = [
   {
-    pizzaId: 12,
+    productId: 12,
     name: 'Mediterranean',
     quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
+    unitPrice: 701,
+    totalPrice: 700,
   },
   {
-    pizzaId: 6,
+    productId: 6,
     name: 'Vegetale',
     quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
+    unitPrice: 851,
+    totalPrice: 850,
   },
   {
-    pizzaId: 11,
+    productId: 11,
     name: 'Spinach and Mushroom',
     quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
+    unitPrice: 1000,
+    totalPrice: 999,
   },
 ];
 
@@ -83,8 +83,9 @@ const CreateOrder: React.FC = () => {
       estimatedDelivery: '',
       position: '',
       orderPrice: 666,
-      priorityPrice: 666,
+      priorityPrice: 200,
       priority: data.priority === 'on',
+      status: 'Собирается',
       cart,
     };
 
