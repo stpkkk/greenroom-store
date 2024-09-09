@@ -66,7 +66,7 @@ const CreateOrder: React.FC = () => {
 
     // Validate phone number
     if (!isValidPhone(data.phone)) {
-      errors.phone = 'Please provide a valid phone number.';
+      errors.phone = 'Укажите номер в формате +79999999999';
     }
 
     // If there are any errors, update state and exit early
@@ -98,38 +98,54 @@ const CreateOrder: React.FC = () => {
   };
 
   return (
-    <div className="p-2">
-      <h2>Готовы оформить заказ?</h2>
+    <div className="px-6 py-4">
+      <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
       <Form method="post" onSubmit={handleSubmit}>
-        <div>
-          <label>Ваше Имя:</label>
-          <input className="input" type="text" name="customer" required />
-        </div>
-
-        <div>
-          <label>Телефон:</label>
-          <div>
-            <input className="input" type="tel" name="phone" required />
-            {formErrors.phone && (
-              <p style={{ color: 'red' }}>{formErrors.phone}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label>Адрес:</label>
-          <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="text-sm sm:basis-40 sm:text-base">Ваше Имя:</label>
+          <div className="grow">
             <input
-              className="input"
+              className="input w-full"
               type="text"
-              name="address"
-              placeholder="Куда доставить заказ?"
+              name="customer"
+              placeholder="Ваше имя"
               required
             />
           </div>
         </div>
 
-        <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="text-sm sm:basis-40 sm:text-base">Телефон:</label>
+          <div className="grow">
+            <input
+              className="input w-full"
+              type="tel"
+              name="phone"
+              placeholder="Ваш телефон"
+              required
+            />
+            {formErrors.phone && (
+              <p className="mt-2 rounded-xl bg-red-100 px-4 py-2 text-xs text-red-500">
+                {formErrors.phone}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="text-sm sm:basis-40 sm:text-base">Адрес:</label>
+          <div className="grow">
+            <input
+              className="input w-full"
+              type="text"
+              name="address"
+              placeholder="Куда доставить заказ"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="mb-12 flex items-center gap-5">
           <input
             className="size-6 accent-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
             type="checkbox"
@@ -137,7 +153,9 @@ const CreateOrder: React.FC = () => {
             id="priority"
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Ускорить доставку ?</label>
+          <label htmlFor="priority" className="font-medium">
+            Ускорить доставку ?
+          </label>
         </div>
 
         <div>
