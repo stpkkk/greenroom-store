@@ -1,11 +1,14 @@
-// import { Order } from '../../types/order'
-import { formatCurrency } from '../../utils/helpers'
+import { OrderProduct } from '../../types/order';
+import { formatCurrency } from '../../utils/helpers';
 
-// function OrderItem({ item, isLoadingDescription, description }: Order)
-function OrderItem({ item }: any) {
-	const { quantity, name, totalPrice } = item
+type OrderItemProps = {
+  item: OrderProduct;
+};
 
-	return (
+function OrderItem({ item }: OrderItemProps) {
+  const { quantity, name, totalPrice } = item;
+
+  return (
     <li className="py-3">
       <div className="flex items-center justify-between gap-4 text-sm">
         <p>
@@ -17,4 +20,4 @@ function OrderItem({ item }: any) {
   );
 }
 
-export default OrderItem
+export default OrderItem;

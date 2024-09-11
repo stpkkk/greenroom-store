@@ -3,6 +3,7 @@ import { Form, useNavigate, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
 import { OrderProduct, OrderType } from '../../types/order'
 import Button from '../../ui/Button';
+import { useAppSelector } from '../../redux/hooks';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -44,6 +45,8 @@ const fakeCart: OrderProduct[] = [
 ];
 
 const CreateOrder: React.FC = () => {
+  const { username } = useAppSelector((state) => state.user);
+
   // const [withPriority, setWithPriority] = useState<boolean>(false)
   const [formErrors, setFormErrors] = useState<FormErrorsType>({});
   const navigate = useNavigate();
@@ -77,7 +80,7 @@ const CreateOrder: React.FC = () => {
 
     const order: OrderType = {
       id: '',
-      customer: data.customer,
+      customer: username,
       phone: data.phone,
       address: data.address,
       estimatedDelivery: '',
@@ -98,6 +101,8 @@ const CreateOrder: React.FC = () => {
     }
   };
 
+  //defaultValue - instead 'value', value that we can change in input, not hardcoded
+
   return (
     <div className="px-6 py-4">
       <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
@@ -109,6 +114,7 @@ const CreateOrder: React.FC = () => {
               className="input w-full"
               type="text"
               name="customer"
+              defaultValue={username}
               placeholder="Ваше имя"
               required
             />

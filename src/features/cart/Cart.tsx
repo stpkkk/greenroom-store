@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../redux/hooks';
 import { CartItemType } from '../../types/cart-item';
 import Button from '../../ui/Button';
 import LinkButton from '../../ui/LinkButton';
@@ -28,13 +29,14 @@ const fakeCart: CartItemType[] = [
 ];
 
 function Cart() {
+  const { username } = useAppSelector((state) => state.user);
   const cart = fakeCart;
 
   return (
     <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Вернуться в каталог</LinkButton>
 
-      <h2 className="mt-7 text-xl font-semibold">Корзина, %NAME%</h2>
+      <h2 className="mt-7 text-xl font-semibold">Корзина, {username}</h2>
 
       <ul className="mt-3 divide-y divide-neutral-500 border-b">
         {cart.map((item) => (

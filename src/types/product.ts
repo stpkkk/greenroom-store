@@ -5,8 +5,8 @@ export type Product = {
   image: string;
   description: string;
   soldOut: boolean;
-  quantity?: number;
-  totalPrice?: number;
+  quantity: number;
+  totalPrice: number;
 };
 
 export type ProductDataType = {

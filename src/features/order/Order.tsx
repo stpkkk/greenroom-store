@@ -19,8 +19,8 @@ function Order() {
 
   const {
     id,
-    customer,
-    phone,
+    // customer,
+    // phone,
     // address,
     priority,
     estimatedDelivery,
