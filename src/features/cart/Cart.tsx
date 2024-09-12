@@ -1,10 +1,10 @@
 import { useAppSelector } from '../../redux/hooks';
-import { CartItemType } from '../../types/cart-item';
+import { Product } from '../../types/product';
 import Button from '../../ui/Button';
 import LinkButton from '../../ui/LinkButton';
 import CartItem from './CartItem';
 
-const fakeCart: CartItemType[] = [
+const fakeCart: Partial<Product>[] = [
   {
     id: 12,
     name: 'Mediterranean',

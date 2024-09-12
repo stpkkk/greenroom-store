@@ -1,9 +1,9 @@
-import { CartItemType } from '../../types/cart-item';
+import { Product } from '../../types/product';
 import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
 
 type CartItemProps = {
-  item: CartItemType;
+  item: Partial<Product>;
 };
 
 function CartItem({ item }: CartItemProps) {
