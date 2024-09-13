@@ -1,13 +1,22 @@
+import { useAppDispatch } from '../../redux/hooks';
 import { Product } from '../../types/product';
 import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
+import { deleteItem } from './cartSlice';
 
 type CartItemProps = {
   item: Partial<Product>;
 };
 
 function CartItem({ item }: CartItemProps) {
-  const { name, quantity, totalPrice } = item;
+  const dispatch = useAppDispatch();
+  const { id, name, quantity, totalPrice } = item;
+
+  function handleDeleteFromCart() {
+    if (id) {
+      dispatch(deleteItem(id));
+    }
+  }
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
@@ -16,7 +25,9 @@ function CartItem({ item }: CartItemProps) {
       </p>
       <div className="flex items-center justify-between sm:gap-6">
         <p className="text-sm font-bold">{formatCurrency(totalPrice || 0)}</p>
-        <Button style="small">Удалить</Button>
+        <Button style="small" onClick={handleDeleteFromCart}>
+          Удалить
+        </Button>
       </div>
     </li>
   );

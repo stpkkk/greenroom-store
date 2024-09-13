@@ -6,17 +6,18 @@ type CartState = {
 };
 
 const initialState: CartState = {
-  // cart: [],
-  cart: [
-    {
-      id: 1,
-      name: 'dfsf',
-      quantity: 2,
-      unitPrice: 666,
-      totalPrice: 1332,
-    },
-  ],
+  cart: [],
 };
+//   cart: [
+//     {
+//       id: 1555,
+//       name: 'dfsf',
+//       quantity: 2,
+//       unitPrice: 666,
+//       totalPrice: 1332,
+//     },
+//   ],
+// };
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -63,3 +64,12 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getCart = (state: { cart: CartState }) => state.cart.cart;
+
+export const getTotalCartQuantity = (state: { cart: CartState }) =>
+  state.cart.cart.reduce((acc, item) => acc + (item.quantity || 0), 0);
+
+export const getTotalCartPrice = (state: { cart: CartState }) =>
+  state.cart.cart.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
+

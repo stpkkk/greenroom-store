@@ -1,54 +1,37 @@
-import { useAppSelector } from '../../redux/hooks';
-import { Product } from '../../types/product';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Button from '../../ui/Button';
 import LinkButton from '../../ui/LinkButton';
 import CartItem from './CartItem';
-
-const fakeCart: Partial<Product>[] = [
-  {
-    id: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    id: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    id: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { clearCart, getCart } from './cartSlice';
+import EmptyCart from './EmptyCart';
 
 function Cart() {
+  const dispatch = useAppDispatch();
   const { username } = useAppSelector((state) => state.user);
-  const cart = fakeCart;
+  const cart = useAppSelector(getCart);
+
+  function handleClearCart() {
+    dispatch(clearCart());
+  }
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Вернуться в каталог</LinkButton>
-
-      <h2 className="mt-7 text-xl font-semibold">Корзина, {username}</h2>
-
+      <h2 className="mt-7 text-xl font-semibold">Корзина{`, ${username}`}</h2>
       <ul className="mt-3 divide-y divide-neutral-500 border-b">
         {cart.map((item) => (
           <CartItem item={item} key={item.id} />
         ))}
       </ul>
-
       <div className="mt-6 space-x-2">
         <Button style="primary" to="/order/new">
           Заказать растения
         </Button>
-        <Button style="secondary">Очистить корзину</Button>
+        <Button style="secondary" onClick={handleClearCart}>
+          Очистить корзину
+        </Button>
       </div>
     </div>
   );
