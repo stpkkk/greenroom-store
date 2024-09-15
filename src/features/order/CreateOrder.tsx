@@ -54,8 +54,6 @@ const CreateOrder: React.FC = () => {
   const isSubmitting = navigation.state === 'submitting';
   const cart = fakeCart;
 
-  // console.log('withPriority:', withPriority);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -107,8 +105,8 @@ const CreateOrder: React.FC = () => {
     <div className="px-6 py-4">
       <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
       <Form method="post" onSubmit={handleSubmit}>
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="text-sm sm:basis-40 sm:text-base">Ваше Имя:</label>
+        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
+          <label className="sm:basis-40 sm:text-base text-sm">Ваше Имя:</label>
           <div className="grow">
             <input
               className="input w-full"
@@ -121,8 +119,8 @@ const CreateOrder: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="text-sm sm:basis-40 sm:text-base">Телефон:</label>
+        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
+          <label className="sm:basis-40 sm:text-base text-sm">Телефон:</label>
           <div className="grow">
             <input
               className="input w-full"
@@ -132,15 +130,15 @@ const CreateOrder: React.FC = () => {
               required
             />
             {formErrors.phone && (
-              <p className="mt-2 rounded-xl bg-red-100 px-4 py-2 text-xs text-red-500">
+              <p className="rounded-xl px-4 py-2 mt-2 text-xs text-red-500 bg-red-100">
                 {formErrors.phone}
               </p>
             )}
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="text-sm sm:basis-40 sm:text-base">Адрес:</label>
+        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
+          <label className="sm:basis-40 sm:text-base text-sm">Адрес:</label>
           <div className="grow">
             <input
               className="input w-full"
@@ -152,7 +150,7 @@ const CreateOrder: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-12 flex items-center gap-5">
+        <div className="flex items-center gap-5 mb-12">
           <input
             className="size-6 accent-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
             type="checkbox"
