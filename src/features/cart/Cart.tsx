@@ -20,7 +20,7 @@ function Cart() {
     <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Вернуться в каталог</LinkButton>
       <h2 className="mt-7 text-xl font-semibold">Корзина{`, ${username}`}</h2>
-      <ul className="mt-3 divide-y divide-neutral-500 border-b">
+      <ul className="divide-neutral-500 mt-3 border-b divide-y">
         {cart.map((item) => (
           <CartItem item={item} key={item.id} />
         ))}
