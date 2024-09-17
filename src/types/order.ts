@@ -1,10 +1,4 @@
-export type OrderProduct = {
-  productId: number;
-  name: string;
-  quantity: number;
-  totalPrice: number;
-  unitPrice: number;
-};
+import { Product } from './product';
 
 export type OrderType = {
   id: string;
@@ -14,8 +8,8 @@ export type OrderType = {
   estimatedDelivery: string;
   position: string;
   orderPrice: number;
-  priorityPrice: number;
-  priority: boolean;
-  cart: OrderProduct[];
+  deliveryPrice: number;
+  delivery: boolean;
+  cart: Partial<Product>[];
   status: string;
 };

@@ -4,7 +4,7 @@ export const ordersData = [
     customer: 'Jonas',
     phone: '123456789',
     address: 'Arroios, Lisbon , Portugal',
-    priority: true,
+    delivery: true,
     estimatedDelivery: '2027-04-25T10:00:00',
     cart: [
       {
@@ -31,6 +31,6 @@ export const ordersData = [
     ],
     position: '-9.000,38.000',
     orderPrice: 100,
-    priorityPrice: 19,
+    deliveryPrice: 19,
   },
 ];

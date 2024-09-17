@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Form, useNavigate, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
-import { OrderProduct, OrderType } from '../../types/order'
+import { OrderType } from '../../types/order';
 import Button from '../../ui/Button';
 import { useAppSelector } from '../../redux/hooks';
+import { getCart, getTotalCartPrice } from '../cart/cartSlice';
+import EmptyCart from '../cart/EmptyCart';
+import { formatCurrency } from '../../utils/helpers';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -13,46 +16,27 @@ type FormDataType = {
   customer: string;
   phone: string;
   address: string;
-  priority: string;
+  delivery: string;
 };
 
 type FormErrorsType = {
   phone?: string;
 };
 
-const fakeCart: OrderProduct[] = [
-  {
-    productId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 701,
-    totalPrice: 700,
-  },
-  {
-    productId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 851,
-    totalPrice: 850,
-  },
-  {
-    productId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 1000,
-    totalPrice: 999,
-  },
-];
-
 const CreateOrder: React.FC = () => {
   const { username } = useAppSelector((state) => state.user);
 
-  // const [withPriority, setWithPriority] = useState<boolean>(false)
+  const [withDelivery, setWithDelivery] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<FormErrorsType>({});
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
-  const cart = fakeCart;
+  const cart = useAppSelector(getCart);
+  const totalCartPrice = useAppSelector(getTotalCartPrice);
+  const deliveryPrice = 200;
+  const totalPrice = withDelivery
+    ? totalCartPrice + +deliveryPrice
+    : totalCartPrice;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -83,9 +67,9 @@ const CreateOrder: React.FC = () => {
       address: data.address,
       estimatedDelivery: '',
       position: '',
-      orderPrice: 666,
-      priorityPrice: 200,
-      priority: data.priority === 'on',
+      orderPrice: totalPrice,
+      deliveryPrice,
+      delivery: withDelivery,
       status: 'Собирается',
       cart,
     };
@@ -98,6 +82,8 @@ const CreateOrder: React.FC = () => {
       console.error('Error creating order:', error);
     }
   };
+
+  if (!cart.length) return <EmptyCart />;
 
   //defaultValue - instead 'value', value that we can change in input, not hardcoded
 
@@ -137,36 +123,40 @@ const CreateOrder: React.FC = () => {
           </div>
         </div>
 
-        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
-          <label className="sm:basis-40 sm:text-base text-sm">Адрес:</label>
-          <div className="grow">
-            <input
-              className="input w-full"
-              type="text"
-              name="address"
-              placeholder="Куда доставить заказ"
-              required
-            />
+        {withDelivery && (
+          <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
+            <label className="sm:basis-40 sm:text-base text-sm">Адрес:</label>
+            <div className="grow">
+              <input
+                className="input w-full"
+                type="text"
+                name="address"
+                placeholder="Куда доставить заказ"
+                required
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="flex items-center gap-5 mb-12">
           <input
             className="size-6 accent-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
             type="checkbox"
-            name="priority"
-            id="priority"
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            name="delivery"
+            id="delivery"
+            onChange={(e) => setWithDelivery(e.target.checked)}
           />
-          <label htmlFor="priority" className="font-medium">
-            Ускорить доставку ?
+          <label htmlFor="delivery" className="font-medium">
+            Добавить доставку ?
           </label>
         </div>
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <Button style="primary" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Размещаем заказ...' : 'Заказать сейчас'}
+            {isSubmitting
+              ? 'Размещаем заказ...'
+              : `Заказать сейчас за ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>

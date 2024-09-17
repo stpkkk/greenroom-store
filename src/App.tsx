@@ -33,24 +33,24 @@ new Server({
 		})
 
 		this.post('/order', (_schema, request) => {
-			let attrs = JSON.parse(request.requestBody)
+      let attrs = JSON.parse(request.requestBody);
 
-			// attrs.customer = ''
-			// attrs.phone = ''
-			// attrs.address = ''
-			// attrs.estimatedDelivery = ''
-			// attrs.position = ''
-			// attrs.orderPrice = 0
-			// attrs.priorityPrice = 0
-			attrs.id = Math.floor(Math.random() * 10000).toString()
-			attrs.estimatedDelivery = '2027-04-25T10:00:00'
+      // attrs.customer = ''
+      // attrs.phone = ''
+      // attrs.address = ''
+      // attrs.estimatedDelivery = ''
+      // attrs.position = ''
+      // attrs.orderPrice = 0
+      // attrs.deliveryPrice = 0
+      attrs.id = Math.floor(Math.random() * 10000).toString();
+      attrs.estimatedDelivery = '2027-04-25T10:00:00';
 
-			ordersData.push(attrs)
+      ordersData.push(attrs);
 
-			return {
-				data: attrs,
-			}
-		})
+      return {
+        data: attrs,
+      };
+    })
 	},
 })
 

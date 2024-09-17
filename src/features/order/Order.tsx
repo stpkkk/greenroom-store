@@ -7,6 +7,9 @@ import {
 	formatDate,
 } from '../../utils/helpers'
 import OrderItem from './OrderItem';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
+import { clearCart } from '../cart/cartSlice';
 
 type OrderData = {
   order: OrderType;
@@ -15,6 +18,7 @@ type OrderData = {
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
 
+  const dispatch = useAppDispatch();
   const { order } = useLoaderData() as OrderData;
 
   const {
@@ -22,16 +26,20 @@ function Order() {
     // customer,
     // phone,
     // address,
-    priority,
+    delivery,
     estimatedDelivery,
     cart,
     // position,
     status,
     orderPrice,
-    priorityPrice,
+    deliveryPrice,
   } = order;
 
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+
+  useEffect(() => {
+    dispatch(clearCart());
+  }, []);
 
   return (
     <div className="space-y-8 px-4 py-6">
@@ -39,7 +47,7 @@ function Order() {
         <h2 className="text-xl font-semibold">Заказ №{id}</h2>
 
         <div className="space-x-2">
-          {priority && (
+          {delivery && (
             <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50">
               Приоритет
             </span>
@@ -52,7 +60,7 @@ function Order() {
 
       <ul className="divide-y divide-neutral-400 py-4 text-neutral-100">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.productId} />
+          <OrderItem item={item} key={item.id} />
         ))}
       </ul>
 
@@ -71,13 +79,14 @@ function Order() {
         <p className="text-sm font-medium text-neutral-700">
           Стоимость: {formatCurrency(orderPrice)}
         </p>
-        {priority && (
+        {delivery && (
           <p className="text-sm font-medium text-neutral-700">
-            Стоимость доставки: {formatCurrency(+priorityPrice)}
+            Стоимость доставки: {formatCurrency(+deliveryPrice)}
           </p>
         )}
         <p className="font-bold">
-          Итого: {formatCurrency(orderPrice + +priorityPrice)}
+          Итого:{' '}
+          {formatCurrency(delivery ? orderPrice + +deliveryPrice : orderPrice)}
         </p>
       </div>
     </div>
