@@ -1,8 +1,8 @@
-import { OrderProduct } from '../../types/order';
+import { Product } from '../../types/product';
 import { formatCurrency } from '../../utils/helpers';
 
 type OrderItemProps = {
-  item: OrderProduct;
+  item: Partial<Product>;
 };
 
 function OrderItem({ item }: OrderItemProps) {
@@ -14,7 +14,7 @@ function OrderItem({ item }: OrderItemProps) {
         <p>
           <span className="font-bold">{quantity}&times;</span> {name}
         </p>
-        <p className="font-bold">{formatCurrency(totalPrice)}</p>
+        <p className="font-bold">{formatCurrency(totalPrice || 0)}</p>
       </div>
     </li>
   );

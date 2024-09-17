@@ -33,7 +33,7 @@ const CreateOrder: React.FC = () => {
   const isSubmitting = navigation.state === 'submitting';
   const cart = useAppSelector(getCart);
   const totalCartPrice = useAppSelector(getTotalCartPrice);
-  const deliveryPrice = 200;
+  const deliveryPrice = 500;
   const totalPrice = withDelivery
     ? totalCartPrice + +deliveryPrice
     : totalCartPrice;
@@ -147,7 +147,7 @@ const CreateOrder: React.FC = () => {
             onChange={(e) => setWithDelivery(e.target.checked)}
           />
           <label htmlFor="delivery" className="font-medium">
-            Добавить доставку ?
+            Добавить доставку?
           </label>
         </div>
 

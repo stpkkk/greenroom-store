@@ -42,45 +42,45 @@ function Order() {
   }, []);
 
   return (
-    <div className="space-y-8 px-4 py-6">
+    <div className="px-4 py-6 space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold">Заказ №{id}</h2>
 
         <div className="space-x-2">
           {delivery && (
-            <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50">
-              Приоритет
+            <span className="text-red-50 px-3 py-1 text-sm font-semibold tracking-wide uppercase bg-red-500 rounded-full">
+              Доставка
             </span>
           )}
-          <span className="rounded-full bg-green-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-green-50">
+          <span className="text-green-50 px-3 py-1 text-sm font-semibold tracking-wide uppercase bg-green-500 rounded-full">
             Заказ {status}
           </span>
         </div>
       </div>
 
-      <ul className="divide-y divide-neutral-400 py-4 text-neutral-100">
+      <ul className="divide-neutral-400 text-neutral-100 py-4 divide-y">
         {cart.map((item) => (
           <OrderItem item={item} key={item.id} />
         ))}
       </ul>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 bg-neutral-100 px-6 py-5 text-neutral-700">
-        <p className="text-sm font-medium sm:text-base">
+      <div className="bg-neutral-100 text-neutral-700 flex flex-wrap items-center justify-between gap-2 px-6 py-5">
+        <p className="sm:text-base text-sm font-medium">
           {deliveryIn >= 0
             ? `Осталось ${calcMinutesLeft(estimatedDelivery)} минут 😃`
-            : 'Order should have arrived'}
+            : 'Заказ доставлен'}
         </p>
-        <p className="text-xs text-neutral-800">
+        <p className="text-neutral-800 text-xs">
           (Estimated delivery: {formatDate(estimatedDelivery)})
         </p>
       </div>
 
-      <div className="space-y-2 bg-neutral-100 px-6 py-5 text-neutral-700">
-        <p className="text-sm font-medium text-neutral-700">
+      <div className="bg-neutral-100 text-neutral-700 px-6 py-5 space-y-2">
+        <p className="text-neutral-700 text-sm font-medium">
           Стоимость: {formatCurrency(orderPrice)}
         </p>
         {delivery && (
-          <p className="text-sm font-medium text-neutral-700">
+          <p className="text-neutral-700 text-sm font-medium">
             Стоимость доставки: {formatCurrency(+deliveryPrice)}
           </p>
         )}
