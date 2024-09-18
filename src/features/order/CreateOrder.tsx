@@ -3,10 +3,11 @@ import { Form, useNavigate, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiGreenRoom'
 import { OrderType } from '../../types/order';
 import Button from '../../ui/Button';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getCart, getTotalCartPrice } from '../cart/cartSlice';
 import EmptyCart from '../cart/EmptyCart';
 import { formatCurrency } from '../../utils/helpers';
+import { fetchAddress } from '../user/userSlice';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -24,7 +25,8 @@ type FormErrorsType = {
 };
 
 const CreateOrder: React.FC = () => {
-  const { username } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { username, address } = useAppSelector((state) => state.user);
 
   const [withDelivery, setWithDelivery] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<FormErrorsType>({});
@@ -90,6 +92,7 @@ const CreateOrder: React.FC = () => {
   return (
     <div className="px-6 py-4">
       <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
+
       <Form method="post" onSubmit={handleSubmit}>
         <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
           <label className="sm:basis-40 sm:text-base text-sm">Ваше Имя:</label>
@@ -124,16 +127,26 @@ const CreateOrder: React.FC = () => {
         </div>
 
         {withDelivery && (
-          <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
+          <div className="sm:flex-row sm:items-center relative flex flex-col gap-2 mb-5">
             <label className="sm:basis-40 sm:text-base text-sm">Адрес:</label>
             <div className="grow">
               <input
                 className="input w-full"
                 type="text"
+                value={address}
                 name="address"
                 placeholder="Куда доставить заказ"
                 required
               />
+              <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
+                <Button
+                  onClick={() => dispatch(fetchAddress())}
+                  style="small"
+                  type="button"
+                >
+                  Геолокация
+                </Button>
+              </span>
             </div>
           </div>
         )}
@@ -164,4 +177,4 @@ const CreateOrder: React.FC = () => {
   );
 };
 
-export default CreateOrder
+export default CreateOrder;

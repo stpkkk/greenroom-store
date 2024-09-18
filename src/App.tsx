@@ -14,34 +14,27 @@ import { ordersData } from './data/orders'
 
 new Server({
 	routes() {
-		this.urlPrefix = import.meta.env.VITE_API_URL
-		this.namespace = 'api'
+    this.urlPrefix = import.meta.env.VITE_API_URL;
+    this.namespace = 'api';
 
-		this.get('/products', () => {
-			return {
-				products: productsData.data,
-			}
-		})
+    this.get('/products', () => {
+      return {
+        products: productsData.data,
+      };
+    });
 
-		this.get('/order/:orderId', (_schema, request) => {
-			const { orderId } = request.params
-			const order = ordersData.find(order => order.id === orderId)
+    this.get('/order/:orderId', (_schema, request) => {
+      const { orderId } = request.params;
+      const order = ordersData.find((order) => order.id === orderId);
 
-			return {
-				order,
-			}
-		})
+      return {
+        order,
+      };
+    });
 
-		this.post('/order', (_schema, request) => {
+    this.post('/order', (_schema, request) => {
       let attrs = JSON.parse(request.requestBody);
 
-      // attrs.customer = ''
-      // attrs.phone = ''
-      // attrs.address = ''
-      // attrs.estimatedDelivery = ''
-      // attrs.position = ''
-      // attrs.orderPrice = 0
-      // attrs.deliveryPrice = 0
       attrs.id = Math.floor(Math.random() * 10000).toString();
       attrs.estimatedDelivery = '2027-04-25T10:00:00';
 
@@ -50,8 +43,11 @@ new Server({
       return {
         data: attrs,
       };
-    })
-	},
+    });
+
+    //Allow to get request from https://api.bigdatacloud.net
+    this.passthrough('https://api.bigdatacloud.net/**');
+  },
 })
 
 const router = createBrowserRouter([
