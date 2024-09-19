@@ -26,7 +26,13 @@ type FormErrorsType = {
 
 const CreateOrder: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { username, address } = useAppSelector((state) => state.user);
+  const {
+    username,
+    status: addressStatus,
+    error: errorAddress,
+    address,
+    position,
+  } = useAppSelector((state) => state.user);
 
   const [withDelivery, setWithDelivery] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<FormErrorsType>({});
@@ -39,6 +45,7 @@ const CreateOrder: React.FC = () => {
   const totalPrice = withDelivery
     ? totalCartPrice + +deliveryPrice
     : totalCartPrice;
+  const isLoadingAddress = addressStatus === 'loading';
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -94,8 +101,8 @@ const CreateOrder: React.FC = () => {
       <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
 
       <Form method="post" onSubmit={handleSubmit}>
-        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
-          <label className="sm:basis-40 sm:text-base text-sm">Ваше Имя:</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="text-sm sm:basis-40 sm:text-base">Ваше Имя:</label>
           <div className="grow">
             <input
               className="input w-full"
@@ -108,8 +115,8 @@ const CreateOrder: React.FC = () => {
           </div>
         </div>
 
-        <div className="sm:flex-row sm:items-center flex flex-col gap-2 mb-5">
-          <label className="sm:basis-40 sm:text-base text-sm">Телефон:</label>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="text-sm sm:basis-40 sm:text-base">Телефон:</label>
           <div className="grow">
             <input
               className="input w-full"
@@ -119,7 +126,7 @@ const CreateOrder: React.FC = () => {
               required
             />
             {formErrors.phone && (
-              <p className="rounded-xl px-4 py-2 mt-2 text-xs text-red-500 bg-red-100">
+              <p className="mt-2 rounded-xl bg-red-100 px-4 py-2 text-xs text-red-500">
                 {formErrors.phone}
               </p>
             )}
@@ -127,31 +134,40 @@ const CreateOrder: React.FC = () => {
         </div>
 
         {withDelivery && (
-          <div className="sm:flex-row sm:items-center relative flex flex-col gap-2 mb-5">
-            <label className="sm:basis-40 sm:text-base text-sm">Адрес:</label>
+          <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+            <label className="text-sm sm:basis-40 sm:text-base">Адрес:</label>
             <div className="grow">
               <input
                 className="input w-full"
                 type="text"
-                value={address}
+                defaultValue={address}
                 name="address"
                 placeholder="Куда доставить заказ"
+                disabled={isLoadingAddress}
                 required
               />
-              <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
-                <Button
-                  onClick={() => dispatch(fetchAddress())}
-                  style="small"
-                  type="button"
-                >
-                  Геолокация
-                </Button>
-              </span>
+              {addressStatus === 'error' && (
+                <p className="mt-2 rounded-xl bg-red-100 px-4 py-2 text-xs text-red-500">
+                  {errorAddress}
+                </p>
+              )}
+              {!position.latitude && !position.longitude && (
+                <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
+                  <Button
+                    disabled={isLoadingAddress}
+                    onClick={() => dispatch(fetchAddress())}
+                    style="small"
+                    type="button"
+                  >
+                    Геолокация
+                  </Button>
+                </span>
+              )}
             </div>
           </div>
         )}
 
-        <div className="flex items-center gap-5 mb-12">
+        <div className="mb-12 flex items-center gap-5">
           <input
             className="size-6 accent-neutral-500 focus:outline-none focus:ring focus:ring-neutral-500 focus:ring-offset-2"
             type="checkbox"
@@ -166,7 +182,21 @@ const CreateOrder: React.FC = () => {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button style="primary" type="submit" disabled={isSubmitting}>
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.longitude && position.latitude
+                ? `${position.latitude}, ${position.longitude}`
+                : ' '
+            }
+          />
+
+          <Button
+            style="primary"
+            type="submit"
+            disabled={isSubmitting || isLoadingAddress}
+          >
             {isSubmitting
               ? 'Размещаем заказ...'
               : `Заказать сейчас за ${formatCurrency(totalPrice)}`}
