@@ -9,11 +9,12 @@ import AppLayout from './ui/AppLayout'
 import { productsData } from './data/products'
 import { Server } from 'miragejs'
 import { ordersData } from './data/orders'
+import { action as updateOrderAction } from './features/order/UpdateOrder';
 
 //import.meta.env.VITE_API_URL - same as process.env.REACT_APP_API_URL;
 
 new Server({
-	routes() {
+  routes() {
     this.urlPrefix = import.meta.env.VITE_API_URL;
     this.namespace = 'api';
 
@@ -45,44 +46,61 @@ new Server({
       };
     });
 
+    this.patch('/order/:orderId', (_schema, request) => {
+      const { orderId } = request.params;
+      const updatedData = JSON.parse(request.requestBody);
+
+      let order = ordersData.find((order) => order.id === orderId);
+
+      if (order) {
+        Object.assign(order, updatedData); // Update the order with new data
+        return {
+          order,
+        };
+      } else {
+        return new Response();
+      }
+    });
+
     //Allow to get request from https://api.bigdatacloud.net
     this.passthrough('https://api.bigdatacloud.net/**');
   },
-})
+});
 
 const router = createBrowserRouter([
-	{
-		element: <AppLayout />,
-		errorElement: <Error />,
+  {
+    element: <AppLayout />,
+    errorElement: <Error />,
 
-		children: [
-			{
-				path: '/',
-				element: <Home />,
-			},
-			{
-				path: '/menu',
-				element: <Menu />,
-				loader: productsLoader,
-				errorElement: <Error />,
-			},
-			{
-				path: '/cart',
-				element: <Cart />,
-			},
-			{
-				path: '/order/new',
-				element: <CreateOrder />,
-			},
-			{
-				path: '/order/:orderId',
-				element: <Order />,
-				loader: orderLoader,
-				errorElement: <Error />,
-			},
-		],
-	},
-])
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/menu',
+        element: <Menu />,
+        loader: productsLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
+      {
+        path: '/order/new',
+        element: <CreateOrder />,
+      },
+      {
+        path: '/order/:orderId',
+        element: <Order />,
+        loader: orderLoader,
+        errorElement: <Error />,
+        action: updateOrderAction,
+      },
+    ],
+  },
+]);
 
 function App() {
 	return <RouterProvider router={router} />
