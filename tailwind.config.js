@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         sans: 'Roboto Mono, monospace',
       },
+      backgroundImage: {
+        home: "url('./src/assets/images/bg-image.jpg')",
+      },
       height: {
         screen: '100dvh',
       },

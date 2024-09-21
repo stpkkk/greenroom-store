@@ -7,7 +7,7 @@ function Menu() {
 	const products = useLoaderData() as Product[]
 
 	return (
-    <ul className="divide-y divide-neutral-500 px-2">
+    <ul className="divide-y divide-neutral-500 bg-neutral-950 px-2">
       {products.map((product) => (
         <MenuItem key={product.id} product={product} />
       ))}

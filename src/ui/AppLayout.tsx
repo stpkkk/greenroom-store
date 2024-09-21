@@ -9,11 +9,15 @@ function AppLayout() {
 	const navigation = useNavigation()
 
 	return (
-    <div className="grid h-screen grid-rows-[auto_1fr_auto] bg-neutral-950 text-neutral-300">
+    <div className="bg-home grid h-screen grid-rows-[auto_1fr_auto] bg-cover bg-fixed bg-center bg-no-repeat text-neutral-300">
       <Header />
-      <main className="no-scrollbar w-full max-w-3xl mx-auto overflow-scroll">
-        {navigation.state === 'loading' ? <Loader /> : <Outlet />}
-      </main>
+
+      <div className="no-scrollbar overflow-scroll">
+        <main className="mx-auto w-full max-w-3xl">
+          {navigation.state === 'loading' ? <Loader /> : <Outlet />}
+        </main>
+      </div>
+
       <CartOverview />
     </div>
   );
