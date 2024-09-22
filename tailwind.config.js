@@ -7,7 +7,7 @@ export default {
         sans: 'Roboto Mono, monospace',
       },
       backgroundImage: {
-        home: "url('./src/assets/images/bg-image.jpg')",
+        home: "url('./src/assets/images/bg-image.webp')",
       },
       height: {
         screen: '100dvh',
