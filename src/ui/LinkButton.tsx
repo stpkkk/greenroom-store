@@ -9,7 +9,7 @@ type LinkButtonProps = {
 function LinkButton({ children, to }: LinkButtonProps) {
   const navigate = useNavigate();
   const className =
-    'hover: hover:text-blue-600 text-sm text-blue-500 underline';
+    'hover: hover:text-blue-600 underline-offset-2 text-sm font-bold text-blue-500 underline';
 
   if (to === '-1')
     return (

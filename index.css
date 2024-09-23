@@ -13,6 +13,10 @@
 		scrollbar-width: none;  /* Firefox */
 	}
 
+	.wrapper {
+		@apply rounded-none px-4 py-4 backdrop-blur-md sm:my-12 sm:rounded-2xl sm:py-12 h-screen sm:h-auto
+	}
+
 	.input {
 		@apply rounded-full border border-neutral-300 px-4 py-2 text-sm text-neutral-500 transition-all duration-300 focus:outline-none focus:ring focus:ring-neutral-500 md:px-6 md:py-3
 	}

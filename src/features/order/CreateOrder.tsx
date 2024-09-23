@@ -97,7 +97,7 @@ const CreateOrder: React.FC = () => {
   //defaultValue - instead 'value', value that we can change in input, not hardcoded
 
   return (
-    <div className="px-6 py-4">
+    <div className="wrapper">
       <h2 className="mb-8 text-xl font-semibold">Готовы оформить заказ?</h2>
 
       <Form method="post" onSubmit={handleSubmit}>
@@ -152,7 +152,7 @@ const CreateOrder: React.FC = () => {
                 </p>
               )}
               {!position.latitude && !position.longitude && (
-                <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
+                <span className="absolute right-[4px] top-[31px] z-50 md:right-[5px] md:top-[5px]">
                   <Button
                     disabled={isLoadingAddress}
                     onClick={() => dispatch(fetchAddress())}
