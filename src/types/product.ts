@@ -10,6 +10,6 @@ export type Product = {
 };
 
 export type ProductDataType = {
-	status: string
-	data: Product[]
-}
+  status: string;
+  data: Product[];
+};

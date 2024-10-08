@@ -1,15 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from './ui/Home'
-import Error from './ui/Error'
-import Menu, { loader as productsLoader } from './features/menu/Menu'
-import Cart from './features/cart/Cart'
-import Order, { loader as orderLoader } from './features/order/Order'
-import CreateOrder from './features/order/CreateOrder'
-import AppLayout from './ui/AppLayout'
-import { productsData } from './data/products'
-import { Server } from 'miragejs'
-import { ordersData } from './data/orders'
+import { Server } from 'miragejs';
+import { productsData } from './data/products';
+import { ordersData } from './data/orders';
+import Cart from './features/cart/Cart';
+import Menu, { loader as productsLoader } from './features/menu/Menu';
+import Order, { loader as orderLoader } from './features/order/Order';
+import CreateOrder from './features/order/CreateOrder';
 import { action as updateOrderAction } from './features/order/UpdateOrder';
+import ProductDetails from './features/menu/ProductDetails';
+import Home from './ui/Home';
+import Error from './ui/Error';
+import AppLayout from './ui/AppLayout';
 
 //import.meta.env.VITE_API_URL - same as process.env.REACT_APP_API_URL;
 
@@ -82,6 +83,11 @@ const router = createBrowserRouter([
         element: <Menu />,
         loader: productsLoader,
         errorElement: <Error />,
+      },
+      {
+        path: '/menu/:productId',
+        element: <ProductDetails />,
+        loader: productsLoader,
       },
       {
         path: '/cart',

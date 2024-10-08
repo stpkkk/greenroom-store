@@ -20,7 +20,10 @@ function Cart() {
 
   return (
     <div className="wrapper flex flex-col justify-start sm:justify-center">
-      <LinkButton to="/menu">&larr; Вернуться в каталог</LinkButton>
+      <div className="flex flex-col items-start gap-2">
+        <LinkButton to="-1">&larr; Назад</LinkButton>
+        <LinkButton to="/menu">Вернуться в каталог</LinkButton>
+      </div>
       <h2 className="mt-7 text-xl font-semibold">Корзина{`, ${username}`}</h2>
       <ul className="mt-3 divide-y divide-neutral-500 border-b">
         {cart.map((item) => (
